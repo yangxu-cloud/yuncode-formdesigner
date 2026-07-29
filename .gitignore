@@ -6,6 +6,10 @@ node_modules
 # Claude config (contains secrets)
 .claude
 
+# Documentation and skills (internal)
+docs
+skills
+
 # Build output
 dist
 dist-ssr
