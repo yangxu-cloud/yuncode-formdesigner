@@ -3,6 +3,9 @@ node_modules
 .pnp
 .pnp.js
 
+# Claude config (contains secrets)
+.claude
+
 # Build output
 dist
 dist-ssr
