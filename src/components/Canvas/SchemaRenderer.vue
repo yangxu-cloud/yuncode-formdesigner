@@ -295,6 +295,7 @@ const childDragPosition = ref<'before' | 'after' | 'below'>('after')
 
 // 全局清理拖拽状态（dragend 时调用）
 function clearDragState() {
+  console.log('[clearDragState] 清空拖拽状态')
   draggingPath.value = null
   dragOverPath.value = null
   dragPosition.value = 'after'
@@ -967,6 +968,7 @@ function onDragStart(e: DragEvent, path: string) {
 
 // 确保拖拽结束后清空状态
 function onDragEnd() {
+  console.log('[DragEnd] 拖拽结束')
   draggingPath.value = null
   designerStore.setDraggingPath(null)
 }
@@ -974,6 +976,7 @@ function onDragEnd() {
 function onDragOver(e: DragEvent, path: string) {
   // 如果正在拖拽内部组件（页签/布局容器内的组件），只设置 dropEffect 后返回
   if (designerStore.draggingPath) {
+    console.log('[DragOver] 内部拖拽，设置 dropEffect:', designerStore.draggingPath)
     e.dataTransfer!.dropEffect = 'copy'
     return
   }
@@ -1364,9 +1367,11 @@ function getMarkerTop(idx: number, tabsPath: string): number {
 
 function onTabsContentDragOver(e: DragEvent, tabsPath: string) {
   e.stopPropagation()
+  console.log('[TabsDragOver] 拖拽到页签内容区域:', { material: designerStore.draggingMaterial, path: designerStore.draggingPath })
   // 只要有拖拽材料或拖拽路径，就允许放置
   if (designerStore.draggingMaterial || designerStore.draggingPath) {
     e.dataTransfer!.dropEffect = 'copy'
+    console.log('[TabsDragOver] 设置 dropEffect = copy')
   }
 
   // 清除外部的辅助线状态
@@ -1629,9 +1634,11 @@ function onTabsContentDrop(e: DragEvent, tabsPath: string) {
 }
 
 function onChildDragStart(e: DragEvent, path: string) {
+  console.log('[ChildDragStart] 开始拖拽内部组件:', path)
   draggingPath.value = path
   designerStore.setDraggingPath(path)
   e.dataTransfer!.effectAllowed = 'copyMove'
+  console.log('[ChildDragStart] effectAllowed:', e.dataTransfer!.effectAllowed)
   // 设置拖拽图片为当前元素，而不是整个父容器
   const target = e.target as HTMLElement
   if (target) {
