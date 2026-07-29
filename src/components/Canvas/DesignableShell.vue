@@ -5,11 +5,9 @@
       'designable-shell--selected': isSelected,
       'designable-shell--hovered': isHovered && !isSelected,
     }"
-    :draggable="draggable"
     @click.stop="onSelect"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
-    @dragstart.stop="$emit('dragstart', $event)"
   >
     <!-- 操作按钮（选中时显示） -->
     <div v-if="isSelected" class="designable-shell__actions">
@@ -34,18 +32,14 @@ import { useDesignerStore } from '@/stores/designer'
 import { registry } from '@/engine/registry'
 import { CopyOutlined, DeleteOutlined } from '@ant-design/icons-vue'
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   path: string
   componentName?: string
-  draggable?: boolean
-}>(), {
-  draggable: false,
-})
+}>()
 
 defineEmits<{
   copy: []
   delete: []
-  dragstart: [event: DragEvent]
 }>()
 
 const designerStore = useDesignerStore()
@@ -148,7 +142,6 @@ function onMouseLeave() {
 
   &__content {
     // 确保拖拽事件正常传递
-    pointer-events: none;
   }
 }
 

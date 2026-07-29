@@ -76,12 +76,12 @@
                             }"
                             :style="{ gridColumn: `span ${tabItem.span}` }"
                             :data-path="tabItem.path"
+                            draggable="true"
+                            @dragstart="onChildDragStart($event, tabItem.path)"
                           >
                             <DesignableShell
                               :path="tabItem.path"
                               :component-name="tabItem.node['x-component']"
-                              :draggable="true"
-                              @dragstart="onChildDragStart($event, tabItem.path)"
                               @delete="onDeleteTabItem(tabItem.path)"
                               @copy="onCopyTabItem(tabItem.path, tabItem.node)"
                             >
@@ -145,12 +145,12 @@
                             }"
                             :style="{ gridColumn: `span ${containerItem.span}` }"
                             :data-path="containerItem.path"
+                            draggable="true"
+                            @dragstart="onChildDragStart($event, containerItem.path)"
                           >
                             <DesignableShell
                               :path="containerItem.path"
                               :component-name="containerItem.node['x-component']"
-                              :draggable="true"
-                              @dragstart="onChildDragStart($event, containerItem.path)"
                               @delete="onDeleteContainerItem(containerItem.path)"
                               @copy="onCopyContainerItem(containerItem.path, containerItem.node)"
                             >
@@ -1632,12 +1632,10 @@ function onChildDragStart(e: DragEvent, path: string) {
   draggingPath.value = path
   designerStore.setDraggingPath(path)
   e.dataTransfer!.effectAllowed = 'copyMove'
-  // 设置拖拽图片为当前元素，而不是整个父容器
-  const target = e.target as HTMLElement
-  if (target) {
-    // 找到最近的可拖拽元素作为拖拽图片
-    const dragElement = target.closest('[draggable="true"]') || target
-    e.dataTransfer!.setDragImage(dragElement, dragElement.offsetWidth / 2, 20)
+  // 设置拖拽图片为当前元素的内容区域
+  const cellElement = (e.target as HTMLElement).closest('.schema-renderer__tabs-cell, .schema-renderer__layout-cell')
+  if (cellElement) {
+    e.dataTransfer!.setDragImage(cellElement, cellElement.offsetWidth / 2, 20)
   }
 }
 
