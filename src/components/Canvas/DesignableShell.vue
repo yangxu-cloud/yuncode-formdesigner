@@ -9,6 +9,7 @@
     @click.stop="onSelect"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
+    @dragstart="$emit('dragstart', $event)"
   >
     <!-- 操作按钮（选中时显示） -->
     <div v-if="isSelected" class="designable-shell__actions">
@@ -44,6 +45,7 @@ const props = withDefaults(defineProps<{
 defineEmits<{
   copy: []
   delete: []
+  dragstart: [event: DragEvent]
 }>()
 
 const designerStore = useDesignerStore()
