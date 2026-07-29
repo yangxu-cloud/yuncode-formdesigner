@@ -972,7 +972,14 @@ function onDragEnd() {
 }
 
 function onDragOver(e: DragEvent, path: string) {
+  // 如果正在拖拽内部组件（页签/布局容器内的组件），不处理外层的拖拽逻辑
+  if (designerStore.draggingPath) return
   if (draggingPath.value === path) return
+
+  // 设置 dropEffect 允许放置
+  if (designerStore.draggingMaterial || designerStore.draggingPath) {
+    e.dataTransfer!.dropEffect = 'copy'
+  }
 
   const target = e.currentTarget as HTMLElement
   if (!target) return
