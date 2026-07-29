@@ -580,8 +580,10 @@ function getLayoutContainerRows(layoutNode: FormilySchema, containerPath: string
 // 布局容器拖拽处理（与页签组件完全一致）
 function onLayoutContainerDragOver(e: DragEvent, layoutPath: string) {
   e.stopPropagation()
-  if (!designerStore.draggingMaterial && !designerStore.draggingPath) return
-  e.dataTransfer!.dropEffect = 'copy'
+  // 只要有拖拽材料或拖拽路径，就允许放置
+  if (designerStore.draggingMaterial || designerStore.draggingPath) {
+    e.dataTransfer!.dropEffect = 'copy'
+  }
 
   // 清除外部的辅助线状态
   dragOverPath.value = null
@@ -1352,8 +1354,10 @@ function getMarkerTop(idx: number, tabsPath: string): number {
 
 function onTabsContentDragOver(e: DragEvent, tabsPath: string) {
   e.stopPropagation()
-  if (!designerStore.draggingMaterial && !designerStore.draggingPath) return
-  e.dataTransfer!.dropEffect = 'copy'
+  // 只要有拖拽材料或拖拽路径，就允许放置
+  if (designerStore.draggingMaterial || designerStore.draggingPath) {
+    e.dataTransfer!.dropEffect = 'copy'
+  }
 
   // 清除外部的辅助线状态
   dragOverPath.value = null
@@ -1617,7 +1621,7 @@ function onTabsContentDrop(e: DragEvent, tabsPath: string) {
 function onChildDragStart(e: DragEvent, path: string) {
   draggingPath.value = path
   designerStore.setDraggingPath(path)
-  e.dataTransfer!.effectAllowed = 'move'
+  e.dataTransfer!.effectAllowed = 'copyMove'
   // 设置拖拽图片为当前元素，而不是整个父容器
   const target = e.target as HTMLElement
   if (target) {
