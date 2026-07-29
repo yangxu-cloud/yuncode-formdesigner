@@ -9,7 +9,7 @@
     @click.stop="onSelect"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
-    @dragstart="$emit('dragstart', $event)"
+    @dragstart.stop="$emit('dragstart', $event)"
   >
     <!-- 操作按钮（选中时显示） -->
     <div v-if="isSelected" class="designable-shell__actions">
@@ -148,6 +148,7 @@ function onMouseLeave() {
 
   &__content {
     // 确保拖拽事件正常传递
+    pointer-events: none;
   }
 }
 
