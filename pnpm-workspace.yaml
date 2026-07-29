@@ -1,0 +1,5 @@
+allowBuilds:
+  '@formily/vue': true
+  core-js: true
+  esbuild: true
+  vue-demi: true
