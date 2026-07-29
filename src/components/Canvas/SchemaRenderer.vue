@@ -972,8 +972,11 @@ function onDragEnd() {
 }
 
 function onDragOver(e: DragEvent, path: string) {
-  // 如果正在拖拽内部组件（页签/布局容器内的组件），不处理外层的拖拽逻辑
-  if (designerStore.draggingPath) return
+  // 如果正在拖拽内部组件（页签/布局容器内的组件），只设置 dropEffect 后返回
+  if (designerStore.draggingPath) {
+    e.dataTransfer!.dropEffect = 'copy'
+    return
+  }
   if (draggingPath.value === path) return
 
   // 设置 dropEffect 允许放置
