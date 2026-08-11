@@ -78,6 +78,7 @@
                             :data-path="tabItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, tabItem.path)"
+                            @dragover.prevent
                           >
                             <DesignableShell
                               :path="tabItem.path"
@@ -147,6 +148,7 @@
                             :data-path="containerItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, containerItem.path)"
+                            @dragover.prevent
                           >
                             <DesignableShell
                               :path="containerItem.path"
