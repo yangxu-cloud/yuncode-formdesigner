@@ -78,7 +78,7 @@
                             :data-path="tabItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, tabItem.path)"
-                            @dragover.prevent="e => { e.dataTransfer!.dropEffect = 'copy' }"
+                            @dragover="onChildDragOver"
                           >
                             <DesignableShell
                               :path="tabItem.path"
@@ -148,7 +148,7 @@
                             :data-path="containerItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, containerItem.path)"
-                            @dragover.prevent="e => { e.dataTransfer!.dropEffect = 'copy' }"
+                            @dragover="onChildDragOver"
                           >
                             <DesignableShell
                               :path="containerItem.path"
@@ -1643,6 +1643,7 @@ function onChildDragStart(e: DragEvent, path: string) {
 
 // 内部组件拖拽悬停 - 在最内层设置 dropEffect
 function onChildDragOver(e: DragEvent) {
+  e.preventDefault()
   e.dataTransfer!.dropEffect = 'copy'
 }
 
