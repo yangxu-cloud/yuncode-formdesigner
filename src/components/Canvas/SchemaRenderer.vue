@@ -148,7 +148,7 @@
                             :data-path="containerItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, containerItem.path)"
-                            @dragover.prevent
+                            @dragover.prevent="onChildDragOver"
                           >
                             <DesignableShell
                               :path="containerItem.path"
@@ -1639,6 +1639,11 @@ function onChildDragStart(e: DragEvent, path: string) {
   if (cellElement) {
     e.dataTransfer!.setDragImage(cellElement, cellElement.offsetWidth / 2, 20)
   }
+}
+
+// 内部组件拖拽悬停 - 在最内层设置 dropEffect
+function onChildDragOver(e: DragEvent) {
+  e.dataTransfer!.dropEffect = 'copy'
 }
 
 // ====== 布局容器拖拽状态 ======
