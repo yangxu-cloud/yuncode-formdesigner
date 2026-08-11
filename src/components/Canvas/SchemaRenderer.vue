@@ -78,7 +78,7 @@
                             :data-path="tabItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, tabItem.path)"
-                            @dragover.prevent
+                            @dragover.prevent="e => { e.dataTransfer!.dropEffect = 'copy' }"
                           >
                             <DesignableShell
                               :path="tabItem.path"
@@ -148,7 +148,7 @@
                             :data-path="containerItem.path"
                             draggable="true"
                             @dragstart="onChildDragStart($event, containerItem.path)"
-                            @dragover.prevent="onChildDragOver"
+                            @dragover.prevent="e => { e.dataTransfer!.dropEffect = 'copy' }"
                           >
                             <DesignableShell
                               :path="containerItem.path"
