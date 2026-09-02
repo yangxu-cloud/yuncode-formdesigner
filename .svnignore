@@ -1,0 +1,29 @@
+# SVN ignore file
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Environment
+.env.local
+.env.*.local
+
+# Claude
+.claude/
+
+# Documentation (not public)
+docs/
+skills/
